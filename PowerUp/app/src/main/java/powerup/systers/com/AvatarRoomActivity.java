@@ -1,6 +1,6 @@
 /**
  * @desc sets up the “Avatar Room” for user to customize avatar features.
- * Allows user to scroll through different skin/hair/clothing options.
+ * Allows user to scroll through different face/hair/clothing options.
  */
 
 package powerup.systers.com;
@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import java.util.Random;
 import powerup.systers.com.datamodel.SessionHistory;
@@ -18,13 +20,17 @@ public class AvatarRoomActivity extends Activity {
 
     public Activity avatarRoomInstance;
     private DatabaseHandler mDbHandler;
+    private ImageView eyeView;
+    private ImageView faceView;
+    private ImageView clothView;
+    private ImageView hairView;
     private ImageView eyeAvatar;
-    private ImageView skinAvatar;
+    private ImageView faceAvatar;
     private ImageView clothAvatar;
     private ImageView hairAvatar;
     private Integer eye = 1;
     private Integer hair = 1;
-    private Integer skin = 1;
+    private Integer face = 1;
     private Integer cloth = 1;
 
     public AvatarRoomActivity() {
@@ -35,18 +41,22 @@ public class AvatarRoomActivity extends Activity {
         setmDbHandler(new DatabaseHandler(this));
         getmDbHandler().open();
         setContentView(R.layout.avatar_room);
-        eyeAvatar = (ImageView) findViewById(R.id.eye_view);
-        hairAvatar = (ImageView) findViewById(R.id.hair_view);
-        skinAvatar = (ImageView) findViewById(R.id.skin_view);
-        clothAvatar = (ImageView) findViewById(R.id.dress_view);
-        ImageView eyeLeft = (ImageView) findViewById(R.id.eyes_left);
-        ImageView eyeRight = (ImageView) findViewById(R.id.eyes_right);
-        ImageView skinLeft = (ImageView) findViewById(R.id.skin_left);
-        ImageView skinRight = (ImageView) findViewById(R.id.skin_right);
-        ImageView clothLeft = (ImageView) findViewById(R.id.clothes_left);
-        ImageView clothRight = (ImageView) findViewById(R.id.clothes_right);
-        ImageView hairLeft = (ImageView) findViewById(R.id.hair_left);
-        ImageView hairRight = (ImageView) findViewById(R.id.hair_right);
+        eyeView = (ImageView) findViewById(R.id.eyes);
+        faceView = (ImageView) findViewById(R.id.face);
+        clothView = (ImageView) findViewById(R.id.clothes);
+        hairView = (ImageView) findViewById(R.id.hair);
+        eyeAvatar = (ImageView) findViewById(R.id.eyeView);
+        hairAvatar = (ImageView) findViewById(R.id.hairView);
+        faceAvatar = (ImageView) findViewById(R.id.faceView);
+        clothAvatar = (ImageView) findViewById(R.id.clothView);
+        ImageButton eyeLeft = (ImageButton) findViewById(R.id.eyeLeft);
+        ImageButton eyeRight = (ImageButton) findViewById(R.id.eyeRight);
+        ImageButton faceLeft = (ImageButton) findViewById(R.id.faceLeft);
+        ImageButton faceRight = (ImageButton) findViewById(R.id.faceRight);
+        ImageButton clothLeft = (ImageButton) findViewById(R.id.clotheLeft);
+        ImageButton clothRight = (ImageButton) findViewById(R.id.clotheRight);
+        ImageButton hairLeft = (ImageButton) findViewById(R.id.hairLeft);
+        ImageButton hairRight = (ImageButton) findViewById(R.id.hairRight);
         ImageView continueButton = (ImageView) findViewById(R.id.continueButtonAvatar);
 
         eyeLeft.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +72,7 @@ public class AvatarRoomActivity extends Activity {
                 java.lang.reflect.Field photoNameField;
                 try {
                     photoNameField = ourRID.getClass().getField(eyeImageName);
+                    eyeView.setImageResource(photoNameField.getInt(ourRID));
                     eyeAvatar.setImageResource(photoNameField.getInt(ourRID));
                 } catch (NoSuchFieldException | IllegalAccessException
                         | IllegalArgumentException e) {
@@ -81,6 +92,7 @@ public class AvatarRoomActivity extends Activity {
                 java.lang.reflect.Field photoNameField;
                 try {
                     photoNameField = ourRID.getClass().getField(eyeImageName);
+                    eyeView.setImageResource(photoNameField.getInt(ourRID));
                     eyeAvatar.setImageResource(photoNameField.getInt(ourRID));
                 } catch (NoSuchFieldException | IllegalAccessException
                         | IllegalArgumentException e) {
@@ -89,20 +101,21 @@ public class AvatarRoomActivity extends Activity {
             }
         });
 
-        skinLeft.setOnClickListener(new View.OnClickListener() {
+        faceLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                skin = (skin - 1) % SessionHistory.skinTotalNo;
-                if (skin == 0) {
-                    skin = SessionHistory.skinTotalNo;
+                face = (face - 1) % SessionHistory.faceTotalNo;
+                if (face == 0) {
+                    face = SessionHistory.faceTotalNo;
                 }
-                String skinImageName = getResources().getString(R.string.skin);
-                skinImageName = skinImageName + skin.toString();
+                String faceImageName = getResources().getString(R.string.face);
+                faceImageName = faceImageName + face.toString();
                 R.drawable ourRID = new R.drawable();
                 java.lang.reflect.Field photoNameField;
                 try {
-                    photoNameField = ourRID.getClass().getField(skinImageName);
-                    skinAvatar.setImageResource(photoNameField.getInt(ourRID));
+                    photoNameField = ourRID.getClass().getField(faceImageName);
+                    faceView.setImageResource(photoNameField.getInt(ourRID));
+                    faceAvatar.setImageResource(photoNameField.getInt(ourRID));
                 } catch (NoSuchFieldException | IllegalAccessException
                         | IllegalArgumentException e) {
                     e.printStackTrace();
@@ -110,18 +123,19 @@ public class AvatarRoomActivity extends Activity {
             }
         });
 
-        skinRight.setOnClickListener(new View.OnClickListener() {
+        faceRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                skin = (skin + SessionHistory.skinTotalNo)
-                        % SessionHistory.skinTotalNo + 1;
-                String skinImageName = getResources().getString(R.string.skin);
-                skinImageName = skinImageName + skin.toString();
+                face = (face + SessionHistory.faceTotalNo)
+                        % SessionHistory.faceTotalNo + 1;
+                String faceImageName = getResources().getString(R.string.face);
+                faceImageName = faceImageName + face.toString();
                 R.drawable ourRID = new R.drawable();
                 java.lang.reflect.Field photoNameField;
                 try {
-                    photoNameField = ourRID.getClass().getField(skinImageName);
-                    skinAvatar.setImageResource(photoNameField.getInt(ourRID));
+                    photoNameField = ourRID.getClass().getField(faceImageName);
+                    faceView.setImageResource(photoNameField.getInt(ourRID));
+                    faceAvatar.setImageResource(photoNameField.getInt(ourRID));
                 } catch (NoSuchFieldException | IllegalAccessException
                         | IllegalArgumentException e) {
                     e.printStackTrace();
@@ -142,6 +156,7 @@ public class AvatarRoomActivity extends Activity {
                 java.lang.reflect.Field photoNameField;
                 try {
                     photoNameField = ourRID.getClass().getField(clothImageName);
+                    clothView.setImageResource(photoNameField.getInt(ourRID));
                     clothAvatar.setImageResource(photoNameField.getInt(ourRID));
                 } catch (NoSuchFieldException | IllegalAccessException
                         | IllegalArgumentException e) {
@@ -161,6 +176,7 @@ public class AvatarRoomActivity extends Activity {
                 java.lang.reflect.Field photoNameField;
                 try {
                     photoNameField = ourRID.getClass().getField(clothImageName);
+                    clothView.setImageResource(photoNameField.getInt(ourRID));
                     clothAvatar.setImageResource(photoNameField.getInt(ourRID));
                 } catch (NoSuchFieldException | IllegalAccessException
                         | IllegalArgumentException e) {
@@ -182,6 +198,7 @@ public class AvatarRoomActivity extends Activity {
                 java.lang.reflect.Field photoNameField;
                 try {
                     photoNameField = ourRID.getClass().getField(hairImageName);
+                    hairView.setImageResource(photoNameField.getInt(ourRID));
                     hairAvatar.setImageResource(photoNameField.getInt(ourRID));
                 } catch (NoSuchFieldException | IllegalAccessException
                         | IllegalArgumentException e) {
@@ -201,6 +218,7 @@ public class AvatarRoomActivity extends Activity {
                 java.lang.reflect.Field photoNameField;
                 try {
                     photoNameField = ourRID.getClass().getField(hairImageName);
+                    hairView.setImageResource(photoNameField.getInt(ourRID));
                     hairAvatar.setImageResource(photoNameField.getInt(ourRID));
                 } catch (NoSuchFieldException | IllegalAccessException
                         | IllegalArgumentException e) {
@@ -214,7 +232,7 @@ public class AvatarRoomActivity extends Activity {
             public void onClick(View v) {
                 getmDbHandler().open();
                 getmDbHandler().setAvatarEye(eye);
-                getmDbHandler().setAvatarSkin(skin);
+                getmDbHandler().setAvatarFace(face);
                 getmDbHandler().setAvatarHair(hair);
                 getmDbHandler().setAvatarCloth(cloth);
                 getmDbHandler().setAvatarBag(0);
