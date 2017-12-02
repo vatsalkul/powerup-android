@@ -21,7 +21,7 @@ When a repository is cloned, it has a default remote called `origin` that points
 1. Set the `upstream`:
 
    `git remote add upstream https://github.com/systers/powerup-android.git`
-  
+ 
 1. Run `git remote -v` to check the status, you should see something like the following:
 
   > origin    https://github.com/YOUR_USERNAME/powerup-android.git (fetch)
@@ -39,7 +39,6 @@ When a repository is cloned, it has a default remote called `origin` that points
    `git merge upstream/master`
 
    This will give you an exact copy of the current remote, make sure you don't have any local changes.
-
 ## Contributing and developing a feature
 1. Make sure you are in the master branch `git checkout master`
 1. Sync your copy `git pull`
