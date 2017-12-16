@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import powerup.systers.com.MapActivity;
 import powerup.systers.com.R;
 import powerup.systers.com.powerup.PowerUpUtils;
 
@@ -23,16 +24,23 @@ public class MinesweeperTutorials extends AppCompatActivity {
         tutorialView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(curTutorialImage == PowerUpUtils.MINES_TUTS.length){
-                    Intent intent = new Intent(MinesweeperTutorials.this,MinesweeperGameActivity.class).putExtra(PowerUpUtils.CALLED_BY, true);
+                if (curTutorialImage == PowerUpUtils.MINES_TUTS.length) {
+                    Intent intent = new Intent(MinesweeperTutorials.this, MinesweeperGameActivity.class).putExtra(PowerUpUtils.CALLED_BY, true);
                     finish();
                     startActivity(intent);
-                }else {
+                } else {
                     tutorialView.setImageDrawable(getResources().getDrawable(PowerUpUtils.MINES_TUTS[curTutorialImage]));
                     curTutorialImage++;
                 }
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
+}
 
