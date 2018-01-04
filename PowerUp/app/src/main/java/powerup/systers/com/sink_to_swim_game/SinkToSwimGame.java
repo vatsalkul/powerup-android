@@ -256,6 +256,7 @@ public class SinkToSwimGame extends AppCompatActivity {
      */
     @Override
     public void onResume() {
+        startService(new Intent(this, SinkToSwimSound.class));
         if (countDownTimer == null) //to ensure that there is no counter already running
             countDownTimer = new CountDownTimer(millisLeft, 1000) {
 
@@ -283,6 +284,7 @@ public class SinkToSwimGame extends AppCompatActivity {
      */
     @Override
     public void onPause() {
+        stopService(new Intent(this, SinkToSwimSound.class));
         countDownTimer.cancel();
         countDownTimer = null;
         super.onPause();
