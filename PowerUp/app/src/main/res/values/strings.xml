@@ -67,4 +67,8 @@
     <string name="start_dialog_message">If you start a new game, previous data and all karma points will be lost !</string>
     <string name="start_title_message">Are you Sure ?</string>
     <string name="start_confirm_message">Create new Avatar</string>
+    <string name="Alert_title">Hooray!</string>
+    <string name="Alert_message_start">You gained</string>
+    <string name="Alert_messgae_end">Karma Points!</string>
+    <string name="Alert_ok_message">OK</string>
 </resources>

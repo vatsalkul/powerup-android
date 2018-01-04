@@ -9,8 +9,10 @@ package powerup.systers.com;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -87,6 +89,24 @@ public class ScenarioOverActivity extends AppCompatActivity {
                 startActivity(new Intent(ScenarioOverActivity.this, GameActivity.class));
             }
         });
+        String alertTitle = getResources().getString(R.string.Alert_title);
+        String alertMessageStart = getResources().getString(R.string.Alert_message_start);
+        String alertMessageEnd = getResources().getString(R.string.Alert_messgae_end);
+        String alertOkMessage = getResources().getString(R.string.Alert_ok_message);
+        AlertDialog.Builder dialogBox = new AlertDialog.Builder(this);
+        dialogBox.setTitle(alertTitle);
+        dialogBox.setMessage(alertMessageStart + " " +  SessionHistory.currScenePoints + " " +  alertMessageEnd);
+        dialogBox.setCancelable(true);
+
+        AlertDialog.Builder ok = dialogBox.setPositiveButton(alertOkMessage,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alertDialog = dialogBox.create();
+        alertDialog.show();
     }
 
     /**
